@@ -14,7 +14,8 @@ import {
   Activity,
   Menu,
   X,
-  LogOut
+  LogOut,
+  ChevronRight
 } from 'lucide-react';
 import { Patient, EACAppointment, SMSLog } from '../lib/types';
 import { buildNeutralSMSMessage } from '../lib/sms';
@@ -171,7 +172,7 @@ export default function AdminDashboard({
                     setAdminTab(item.id as any);
                     setIsMobileMenuOpen(false);
                   }}
-                  className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition ${
+                  className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition cursor-pointer ${
                     activeTab === item.id 
                       ? 'bg-blue-600 text-white shadow-md' 
                       : 'hover:bg-slate-800 text-slate-400 hover:text-white'
@@ -193,7 +194,7 @@ export default function AdminDashboard({
         <div className="border-t border-slate-800 pt-4 px-2 mt-auto">
           <button
             onClick={onLogout}
-            className="w-full flex items-center gap-2 px-3 py-2.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-white hover:bg-slate-800 transition"
+            className="w-full flex items-center gap-2 px-3 py-2.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-white hover:bg-slate-800 transition cursor-pointer"
           >
             <LogOut className="h-4 w-4" /> Sign Out
           </button>
@@ -209,47 +210,77 @@ export default function AdminDashboard({
               <p className="text-slate-500 text-xs sm:text-sm">Enhanced Adherence Counseling tracking & automated reminder engine.</p>
             </div>
 
-            {/* Metrics */}
+            {/* Interactive Quick-Action Metrics */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs">
+              
+              <button
+                type="button"
+                onClick={() => setAdminTab('patients')}
+                className="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs hover:border-blue-300 hover:shadow-md transition text-left group cursor-pointer relative overflow-hidden"
+              >
                 <div className="flex justify-between items-start">
                   <div>
-                    <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">Active Patients</p>
+                    <p className="text-xs font-bold text-slate-500 uppercase tracking-wider group-hover:text-blue-600 transition">Active Patients</p>
                     <p className="text-2xl font-extrabold text-slate-900 mt-1">{patients.length}</p>
                   </div>
-                  <div className="p-2.5 bg-blue-50 text-blue-600 rounded-xl"><Users className="h-5 w-5" /></div>
+                  <div className="p-2.5 bg-blue-50 text-blue-600 rounded-xl group-hover:scale-110 transition"><Users className="h-5 w-5" /></div>
                 </div>
-              </div>
+                <div className="mt-3 flex items-center gap-1 text-xs font-bold text-blue-600">
+                  <span>View Roster</span> <ChevronRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition" />
+                </div>
+              </button>
 
-              <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs">
+              <button
+                type="button"
+                onClick={() => setAdminTab('schedule')}
+                className="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs hover:border-emerald-300 hover:shadow-md transition text-left group cursor-pointer relative overflow-hidden"
+              >
                 <div className="flex justify-between items-start">
                   <div>
-                    <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">Upcoming Sessions</p>
+                    <p className="text-xs font-bold text-slate-500 uppercase tracking-wider group-hover:text-emerald-600 transition">Upcoming Sessions</p>
                     <p className="text-2xl font-extrabold text-slate-900 mt-1">{scheduledCount}</p>
                   </div>
-                  <div className="p-2.5 bg-emerald-50 text-emerald-600 rounded-xl"><Calendar className="h-5 w-5" /></div>
+                  <div className="p-2.5 bg-emerald-50 text-emerald-600 rounded-xl group-hover:scale-110 transition"><Calendar className="h-5 w-5" /></div>
                 </div>
-              </div>
+                <div className="mt-3 flex items-center gap-1 text-xs font-bold text-emerald-600">
+                  <span>View Schedule</span> <ChevronRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition" />
+                </div>
+              </button>
 
-              <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs">
+              <button
+                type="button"
+                onClick={() => setAdminTab('attendance')}
+                className="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs hover:border-red-300 hover:shadow-md transition text-left group cursor-pointer relative overflow-hidden"
+              >
                 <div className="flex justify-between items-start">
                   <div>
-                    <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">Missed Sessions</p>
+                    <p className="text-xs font-bold text-slate-500 uppercase tracking-wider group-hover:text-red-600 transition">Missed Sessions</p>
                     <p className="text-2xl font-extrabold text-red-600 mt-1">{missedCount}</p>
                   </div>
-                  <div className="p-2.5 bg-red-50 text-red-600 rounded-xl"><AlertTriangle className="h-5 w-5" /></div>
+                  <div className="p-2.5 bg-red-50 text-red-600 rounded-xl group-hover:scale-110 transition"><AlertTriangle className="h-5 w-5" /></div>
                 </div>
-              </div>
+                <div className="mt-3 flex items-center gap-1 text-xs font-bold text-red-600">
+                  <span>Action Follow-ups</span> <ChevronRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition" />
+                </div>
+              </button>
 
-              <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs">
+              <button
+                type="button"
+                onClick={() => setAdminTab('logs')}
+                className="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs hover:border-purple-300 hover:shadow-md transition text-left group cursor-pointer relative overflow-hidden"
+              >
                 <div className="flex justify-between items-start">
                   <div>
-                    <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">Dispatched Reminders</p>
+                    <p className="text-xs font-bold text-slate-500 uppercase tracking-wider group-hover:text-purple-600 transition">Dispatched Reminders</p>
                     <p className="text-2xl font-extrabold text-slate-900 mt-1">{smsLogs.length}</p>
                   </div>
-                  <div className="p-2.5 bg-purple-50 text-purple-600 rounded-xl"><MessageSquare className="h-5 w-5" /></div>
+                  <div className="p-2.5 bg-purple-50 text-purple-600 rounded-xl group-hover:scale-110 transition"><MessageSquare className="h-5 w-5" /></div>
                 </div>
-              </div>
+                <div className="mt-3 flex items-center gap-1 text-xs font-bold text-purple-600">
+                  <span>View Audit Trail</span> <ChevronRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition" />
+                </div>
+              </button>
+
             </div>
 
             {/* Quick Action Forms */}
@@ -302,7 +333,7 @@ export default function AdminDashboard({
                       onChange={e => setNewPatient({ ...newPatient, baselineViralLoad: e.target.value })}
                     />
                   </div>
-                  <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-xl text-sm transition shadow-sm">
+                  <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-xl text-sm transition shadow-sm cursor-pointer">
                     Register Patient & Start Workflow
                   </button>
                 </form>
@@ -361,7 +392,7 @@ export default function AdminDashboard({
                       />
                     </div>
                   </div>
-                  <button type="submit" className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl text-sm transition shadow-sm">
+                  <button type="submit" className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl text-sm transition shadow-sm cursor-pointer">
                     Schedule Session & Set Reminders
                   </button>
                 </form>
@@ -470,7 +501,7 @@ export default function AdminDashboard({
                       <td className="p-4">
                         <button
                           onClick={() => handleManualSMSDispatch(apt)}
-                          className="px-3 py-1.5 bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-xl text-xs font-bold flex items-center gap-1.5 transition"
+                          className="px-3 py-1.5 bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-xl text-xs font-bold flex items-center gap-1.5 transition cursor-pointer"
                         >
                           <MessageSquare className="h-3.5 w-3.5 shrink-0" /> Dispatch SMS
                         </button>
@@ -520,13 +551,13 @@ export default function AdminDashboard({
                         <div className="flex flex-wrap items-center gap-2">
                           <button
                             onClick={() => onUpdateAttendance(apt.id, 'Attended')}
-                            className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition shadow-2xs"
+                            className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition shadow-2xs cursor-pointer"
                           >
                             Mark Attended
                           </button>
                           <button
                             onClick={() => onUpdateAttendance(apt.id, 'Missed')}
-                            className="px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-bold transition shadow-2xs"
+                            className="px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-bold transition shadow-2xs cursor-pointer"
                           >
                             Flag Missed
                           </button>
